@@ -10,7 +10,7 @@
                         <img class="card-img-top" :src="item.image_url" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">{{item.title}}</h5>
-                            <p class="card-text">Genres :<span v-for="items in item.genre"> {{items.name}},</span></p>
+                            <p class="card-text">Genres :<span v-for="items in item.genre" v-bind:key="items.key"> {{items.name}},</span></p>
                             <p class="card-text">{{item.synopsis.substring(0,150)+".."}}</p>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
             axios.get(url)
                 .then( ({ data }) => {
                     this.allfilm = data
-                    data.season.map((item, key) => {
+                    data.season.map((item) => {
                         if (item.title !== null && this.film.length < 10 ) {
                             this.film.push(item)
                         }

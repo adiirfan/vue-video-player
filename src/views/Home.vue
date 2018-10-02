@@ -75,7 +75,7 @@
 
                             <div class="card-body">
                                 <h5 class="card-title">{{item.title}}</h5>
-                                <p class="card-text">Genres :<span v-for="items in item.genre"> {{items.name}},</span></p>
+                                <p class="card-text">Genres :<span v-for="items in item.genre" v-bind:key="items.key"> {{items.name}},</span></p>
                             </div>
                         </div>
                     </swiper-slide>
@@ -95,7 +95,7 @@
                         <img class="card-img-top" :src="item.image_url" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">{{item.title}}</h5>
-                            <p class="card-text">Genres :<span v-for="items in item.genre"> {{items.name}},</span></p>
+                            <p class="card-text">Genres :<span v-for="items in item.genre" v-bind:key="items.key"> {{items.name}},</span></p>
                         </div>
                     </div>
                 </div>
@@ -167,9 +167,7 @@
                         return 1;
                     return 0;
                 }
-
                 this.filmrekomen.sort(compare);
-                
             },
             openDetail(data) {
                 //this.$store.commit('setData', data)

@@ -18,7 +18,7 @@
                     <div class="col-md-9 ">
                         <h5>{{allfilm.title}}</h5>
                         <span>Kategori : <span class="badge badge-primary p-2 m-1">{{allfilm.source}}</span></span><br>
-                        <span>Genre : <span v-for="genres in allfilm.genre" class="badge badge-primary p-2 m-1">{{genres.name}}</span></span><br>
+                        <span>Genre : <span v-for="genres in allfilm.genre" class="badge badge-primary p-2 m-1" v-bind:key="genres.key">{{genres.name}}</span></span><br>
                         <span>Sinopsis : {{allfilm.synopsis}}</span><br>
                     </div>
                 </div>
