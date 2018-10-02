@@ -1,0 +1,68 @@
+.image {
+    position: relative;
+    width: 100%; /* for IE 6 */
+}
+
+.title {
+    position: absolute;
+    text-align: center;
+    top: 47%;
+    -webkit-transform: translateY(-47%);
+    transform: translateY(-47%);
+    width: 100%;
+}
+
+
+@media (min-width: 576px){
+    .card-columns-custom {
+        -webkit-column-count: 4;
+        -moz-column-count: 4;
+        column-count: 4;
+        -webkit-column-gap: 1.25rem;
+        -moz-column-gap: 1.25rem;
+        column-gap: 1.25rem;
+        orphans: 1;
+        widows: 1;
+    }
+}
+@media (min-width: 900px){
+    .card-columns-custom {
+        -webkit-column-count: 5;
+        -moz-column-count: 5;
+        column-count: 5;
+        -webkit-column-gap: 1.25rem;
+        -moz-column-gap: 1.25rem;
+        column-gap: 1.25rem;
+        orphans: 1;
+        widows: 1;
+    }
+}
+@media (max-width: 576px){
+    .card-columns-custom {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+        -webkit-column-gap: 1.25rem;
+        -moz-column-gap: 1.25rem;
+        column-gap: 1.25rem;
+        orphans: 1;
+        widows: 1;
+    }
+}
+@include media-breakpoint-only(lg) {
+    column-count:5;
+}
+@include media-breakpoint-only(xl) {
+    column-count: 5;
+}
+.crop {
+    width: 200px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.crop img {
+    width: 400px;
+    height: 300px;
+    margin: -75px 0 0 -100px;
+}
