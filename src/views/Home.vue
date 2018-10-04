@@ -1,101 +1,89 @@
 <template>
-    <div class="container">
-        <div class="row mt-3 mb-3">
-            <div class="col-md-12 text-center text-sm-left">
-                <h4>CATEGORY</h4>
-            </div>
-                <div class="col-md-3 col-6">
-                    <div class="card text-white mb-3 p-0 "  >
-                        <router-link :to="{ name: 'hello' }">
-                        <div class="card-body p-0">
-                            <img class="image" src="https://cdn0-a.production.images.static6.com/PSL7KQbN_1STxMSkQ6ZdTCTMc2c=/250x150/smart/filters:quality(90):brightness(-20):saturation(0.4)/vidio-media-production/uploads/category/cover_image/35/funny-688ded.jpg"
-                            style="width:100%;z-index:0;"
-                            />
-                            <div class="title">
-                            <h3>Funny</h3>
+    <div>
+        <headers/>
+        <div>
+            <swiper style="height:100%;">
+                <swiper-slide v-for="item in filmrekomen" v-bind:key="item.key">
+                    <div class="cover" style="background-image: url('http://192.168.2.87:244/assets/images/cover/1.jpg');background-size: cover;min-height:300px;">
+                        <div class="container p-5" style="min-height:300px;">
+                            <div class="py-3">
+                            <div class="col-md-6">
+                                <h5 class="text-white">{{item.nama}}</h5>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="card-text text-white">Genres :<span v-for="items in item.tag" v-bind:key="items.key" class="badge badge-primary p-2 m-1"> {{items.nama}},</span></p>
+                            </div>
+                            <div class="col-md-6" v-if="$mq != 'mobile'">
+                                <br>
+                                <p class="text-white">{{item.sinopsis}}</p>
+                            </div>
+                            <br>
+                            <div class="col-md-6">
+                                <a href="#" class="btn play-button">
+                                    <i class="material-icons">
+                                        play_arrow
+                                    </i>
+                                </a>
+                            </div>
                             </div>
                         </div>
-                        </router-link>
+                    </div>
+                </swiper-slide>
+            </swiper>
+        </div>
+        <div class="container">
+            <div class="row mt-3 mb-3">
+                <div class="col-md-12 text-center text-sm-left">
+                    <h4>VIDEO TERBARU</h4>
+                </div>
+                <div class="col-md-12">
+                    <swiper :options="swiperOption">
+                        <swiper-slide v-for="item in filmterbaru" v-bind:key="item.key">
+                            <div class="card"  style="height: 100%;max-height:400px;">
+                                <div class="crop">
+                                    <img class="card-img-top img- coverslider" :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ item.cover" alt="Card image cap">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{item.namavideo}}</h5>
+                                    <p class="card-text">Genres :<span v-for="items in item.tag" v-bind:key="items.key" class="badge badge-primary p-2 m-1"> {{items.nama}}</span></p>
+                                </div>
+                            </div>
+                        </swiper-slide>
+
+                        <div class="swiper-pagination" slot="pagination"></div>
+
+                    </swiper>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-12 text-center text-sm-left">
+                    <h4>REKOMENDASI</h4>
+                </div>
+                <div v-if="$mq === 'mobile'" class="col-md-12 text-sm-left">
+                    <div class="card-columns card-columns-custom">
+                        <div class="card p-2" v-for="item in filmrekomen" v-bind:key="item.key" @click="openDetail(item)">
+                            <div class="fluid-container">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img class="card-img-top" :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ item.cover" alt="Card image cap">
+                                    </div>
+                                    <div class="col-8 p-0">
+                                        <h5 class="card-title">{{item.nama}}</h5>
+                                        <p class="card-text">Genres :<span v-for="items in item.tag" v-bind:key="items.key" class="badge badge-primary p-2 m-1"> {{items.nama}}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-            <div class="col-md-3 col-6 ">
-                <div class="card text-white mb-3 p-0 "  >
-                    <router-link :to="{ name: 'hello' }">
-                        <div class="card-body p-0">
-                            <img class="image" src="https://cdn0-a.production.images.static6.com/PSL7KQbN_1STxMSkQ6ZdTCTMc2c=/250x150/smart/filters:quality(90):brightness(-20):saturation(0.4)/vidio-media-production/uploads/category/cover_image/35/funny-688ded.jpg"
-                                 style="width:100%;z-index:0;"
-                            />
-                            <div class="title">
-                                <h3>Funny</h3>
-                            </div>
-                        </div>
-                    </router-link>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 ">
-                <div class="card text-white mb-3 p-0 "  >
-                    <router-link :to="{ name: 'hello' }">
-                        <div class="card-body p-0">
-                            <img class="image" src="https://cdn0-a.production.images.static6.com/PSL7KQbN_1STxMSkQ6ZdTCTMc2c=/250x150/smart/filters:quality(90):brightness(-20):saturation(0.4)/vidio-media-production/uploads/category/cover_image/35/funny-688ded.jpg"
-                                 style="width:100%;z-index:0;"
-                            />
-                            <div class="title">
-                                <h3>Funny</h3>
-                            </div>
-                        </div>
-                    </router-link>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 ">
-                <div class="card text-white mb-3 p-0 "  >
-                    <router-link :to="{ name: 'hello' }">
-                        <div class="card-body p-0">
-                            <img class="image" src="https://cdn0-a.production.images.static6.com/PSL7KQbN_1STxMSkQ6ZdTCTMc2c=/250x150/smart/filters:quality(90):brightness(-20):saturation(0.4)/vidio-media-production/uploads/category/cover_image/35/funny-688ded.jpg"
-                                 style="width:100%;z-index:0;"
-                            />
-                            <div class="title">
-                                <h3>Funny</h3>
-                            </div>
-                        </div>
-                    </router-link>
-                </div>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-12 text-center text-sm-left">
-                <h4>VIDEO TERBARU</h4>
-            </div>
-            <div class="col-md-12">
-                <swiper :options="swiperOption">
-                    <swiper-slide v-for="item in filmterbaru" v-bind:key="item.key">
-                        <div class="card"  style="height: 600px;">
-
-                            <img class="card-img-top img-" :src="item.image_url" alt="Card image cap">
-
+                <div v-else class="col-md-12">
+                    <div class="card-columns card-columns-custom">
+                        <div class="card" v-for="item in filmrekomen" v-bind:key="item.key" @click="openDetail(item)">
+                            <img class="card-img-top" :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ item.cover" alt="Card image cap">
                             <div class="card-body">
-                                <h5 class="card-title">{{item.title}}</h5>
-                                <p class="card-text">Genres :<span v-for="items in item.genre" v-bind:key="items.key"> {{items.name}},</span></p>
+                                <h5 class="card-title">{{item.nama}}</h5>
+                                <p class="card-text">Genres :<span class="badge badge-primary p-2 m-1" v-for="items in item.tag" v-bind:key="items.key"> {{items.nama}}</span></p>
                             </div>
-                        </div>
-                    </swiper-slide>
-
-                    <div class="swiper-pagination" slot="pagination"></div>
-
-                </swiper>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-12 text-center text-sm-left">
-                <h4>REKOMENDASI</h4>
-            </div>
-            <div>
-                <div class="card-columns card-columns-custom">
-                    <div class="card" v-for="item in film" v-bind:key="item.key" @click="openDetail(item)">
-                        <img class="card-img-top" :src="item.image_url" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{item.title}}</h5>
-                            <p class="card-text">Genres :<span v-for="items in item.genre" v-bind:key="items.key"> {{items.name}},</span></p>
                         </div>
                     </div>
                 </div>
@@ -106,14 +94,18 @@
 
 <script>
     import axios from 'axios'
-    const url = "http://localhost:81/api/"
+    import headers from '@/components/header'
+    const url = "http://192.168.2.82:81/api/"
     export default {
         name: "home",
+        components:{
+            headers
+        },
         data() {
             return {
                 swiperOption: {
-                    slidesPerView: 4,
-                    spaceBetween: 20,
+                    slidesPerView: 5,
+                    spaceBetween: 10,
                     // init: false,
                     pagination: {
                         el: '.swiper-pagination',
@@ -121,12 +113,12 @@
                     },
                     breakpoints: {
                         1024: {
-                            slidesPerView: 4,
-                            spaceBetween: 20
+                            slidesPerView: 7,
+                            spaceBetween: 10
                         },
                         768: {
-                            slidesPerView: 4,
-                            spaceBetween: 20
+                            slidesPerView: 5,
+                            spaceBetween: 10
                         },
                         640: {
                             slidesPerView: 1,
@@ -171,7 +163,7 @@
             },
             openDetail(data) {
                 //this.$store.commit('setData', data)
-                this.$router.push({ 'name': 'player',query: { id: data.mal_id } })
+                this.$router.push({ 'name': 'player',query: { id: data.id } })
             }
         }
 
@@ -180,5 +172,25 @@
 </script>
 
 <style scoped>
-
+    .crop {
+        width: 100%;
+        height: 400px;
+        overflow: hidden;
+    }
+    .crop img {
+        width: 100%;
+        height: 100%;
+    }
+    .cover{
+        background-color: rgba(0,0,0,0.7);
+        background-blend-mode: multiply;
+    }
+    .play-button{
+        background: #ce2424;
+        color: #FFF;
+        border-radius: 10px;
+        border: 0px;
+        margin-right: 20px;
+        padding:5px 15px;
+    }
 </style>

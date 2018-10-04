@@ -2,7 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Player from './views/player.vue'
 import category from './views/Category.vue'
+import Tag from './views/Tag.vue'
 import Home from './views/Home.vue'
+import Film from './views/Film.vue'
+import categoryandtag from './views/categoryandtag.vue'
 
 Vue.use(Router)
 
@@ -29,14 +32,29 @@ export default new Router({
           component: Player,
       },
       {
-          path: '/category',
+          path: '/category/:id',
           name: 'category',
           component: category,
+      },
+      {
+          path: '/tag/:id',
+          name: 'tag',
+          component: Tag,
+      },
+      {
+          path: '/category/',
+          name: 'categoryandtag',
+          component: categoryandtag,
       },
       {
           path: '/genre',
           name: 'genre',
           component: category,
+      },
+      {
+          path: '/film/:id',
+          name: 'film',
+          component: Film,
       },
   ]
 })
