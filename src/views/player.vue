@@ -11,24 +11,24 @@
                 </video>
                 <div class="row mt-2">
                     <div class="col-md-12 py-3">
-                        <h2 class="border-bottom pb-3">Title - Episode 9</h2>
+                        <h2 class="border-bottom pb-3">{{video.namavideo}}</h2>
                     </div>
                     <div class="col-md-12 pt-3 pr-0">
                         <div class="row px-3">
                             <div class="col-3 px-0">
-                                <img class="card-img-top cover" :src="allfilm.image_url" alt="Card image cap">
+                                <img class="card-img-top cover" :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ video.cover" alt="Card image cap">
                             </div>
                             <div class="col-8 pr-0">
-                                <h5>{{allfilm.title}}</h5>
-                                <span>Kategori : <span class="badge badge-primary p-2 m-1">{{allfilm.source}}</span></span><br>
-                                <span>Genre : <span v-for="genres in allfilm.genre" class="badge badge-primary p-2 m-1" v-bind:key="genres.key">{{genres.name}}</span></span><br>
-                                <span v-if="$mq != 'mobile'">Sinopsis : {{allfilm.synopsis}}</span><br>
+                                <h5>{{video.nama}}</h5>
+                                <span>Kategori : <span v-for="categorys in category" class="badge badge-primary p-2 m-1"  v-bind:key="categorys.key">{{categorys.nama}}</span></span><br>
+                                <span>Genre : <span v-for="genres in genre" class="badge badge-primary p-2 m-1" v-bind:key="genres.key">{{genres.nama}}</span></span><br>
+                                <!--span v-if="$mq != 'mobile'">Sinopsis : {{allfilm.synopsis}}</span><br!-->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 my-4 shadow-sm">
+            <!--div class="col-md-4 my-4 shadow-sm">
                 <div class="list-group">
                     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                         <div class="d-flex">
@@ -37,7 +37,7 @@
                         </div>
                     </a>
                 </div>
-            </div>
+            </div!-->
             </div>
         </div>
     </div>
@@ -46,27 +46,37 @@
 <script>
     import axios from 'axios'
     import headers from '@/components/header'
-
+    const url = "http://192.168.2.82:81/api/"
     export default {
         name: "player",
         components: {headers},
-        data () {
+        data() {
             return {
-                searchvalue : this.$route.query.id,
-                film : [],
-                allfilm:[],
-                url: ''
+                loading: true,
+                id : this.$route.query.id,
+                video:[],
+                genre:[],
+                category:[],
+                bgc: {
+                    backgroundImage: ''
+                }
             }
         },
-        beforeCreate(){
-            this.url = "https://api.jikan.moe/anime/" + this.$route.query.id
-            this.loading = true
-            axios.get(this.url)
-                .then( ({ data }) => {
-                    this.allfilm = data
-                    this.loading = false
-                });
+        mounted () {
+            this.getfilm()
         },
+        methods: {
+            async getfilm() {
+                const response = await axios.get(url + '/video/read.php', {
+                    params: {
+                        id: this.id,
+                    },
+                })
+                this.video = response.data
+                this.genre = response.data.tag
+                this.category = response.data.category
+            },
+        }
     }
 </script>
 
