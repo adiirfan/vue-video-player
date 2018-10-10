@@ -36,15 +36,25 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-            <div class="card col-md-3 my-3 m-3 px-0" v-for="items in video" v-bind:key="items.key" @click="openDetail(items.id)">
-                <!--img class="card-img-top" alt="Card image cap" !-->
-                <canvas width="300" height="200" v-bind:id="'test' + items.id"></canvas>
-                <div class="card-body">
-                    <h5 class="card-title">{{items.nama}}</h5>
+            <div class="row" v-if="$mq != 'mobile'">
+                <div  class="card col-md-3 my-3 m-3 px-0" v-for="items in video" v-bind:key="items.key">
+                    <!--img class="card-img-top" alt="Card image cap" !-->
+                    <div @click="openDetail(items.id)">
+                        <vue-plyr id="thumb">
+                            <video preload="metadata"  v-if="items.source" :src="items.source" width="100%">
+
+                            </video>
+                        </vue-plyr>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{items.nama}}</h5>
+                    </div>
                 </div>
             </div>
-            </div>
+            <ul v-else class="list-group my-3">
+                <button type="button" class="list-group-item list-group-item-action"
+                        v-for="items in video" v-bind:key="items.key" @click="openDetail(items.id)">{{items.nama}}</button>
+            </ul>
         </div>
     </div>
 </template>
@@ -65,6 +75,7 @@
                 loading: true,
                 id : this.$route.params.id,
                 video:[],
+                videoall:[],
                 genre:[],
                 bgc: {
                     backgroundImage: ''
@@ -82,37 +93,20 @@
                     },
                 })
                 this.film = response.data
-                this.video = response.data.video
+                this.videoall = response.data.video
                 this.genre = response.data.tag
                 this.bgc.backgroundImage = 'url(' + 'https://myanimelist.cdn-dena.com/images/anime/1173/'+ this.film.cover + ')'
-                this.video.map((item) => {
-                    this.generate(item)
+                this.videoall.map((item) => {
+                    this.video.push({
+                        id: item.id,
+                        nama: item.nama,
+                        source: 'http://192.168.2.82:81/api/assets/videos/' + item.file
+                    })
                 })
             },
-            generate(item){
-                var i = 10;
-                var video = document.createElement("video");
-
-                video.addEventListener('loadeddata', function() {
-                    video.currentTime = i;
-                }, false);
-
-                video.addEventListener('seeked', function() {
-                    generateThumbnail(i);
-                }, false);
-
-                video.preload = "auto";
-                video.src = url + 'assets/videos/' + item.file;
-
-                function generateThumbnail() {
-                    var c = document.getElementById("test" + item.id);
-                    var ctx = c.getContext("2d");
-                    ctx.drawImage(video, 0,0,300,200);
-                }
-            },
             openDetail(data) {
-                this.$store.commit('setData', data)
-                this.$router.replace({ 'path': '/player',query: { id: data } })
+                //this.$store.commit('setData', data)
+                this.$router.push({ 'path': '/player',query: { id: data } })
             }
         }
     }

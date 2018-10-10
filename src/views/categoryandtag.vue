@@ -7,16 +7,20 @@
                     <h4>CATEGORY : </h4>
                 </div>
                 <div class="col-md-12 text-center text-sm-left">
-                    <button type="button" class="btn btn-danger" v-for="item in categorylist" v-bind:key="item.key" v-html="item.nama">
+                    <button type="button" class="btn btn-danger"
+                            v-for="item in categorylist" v-bind:key="item.key" v-html="item.nama"
+                            @click="openCat(item.id)">
                     </button>
                 </div>
             </div>
             <div class="row mt-4 mb-3">
                 <div class="col-md-12 text-center text-sm-left">
-                    <h4>Tags : </h4>
+                    <h4>GENRE : </h4>
                 </div>
                 <div class="col-md-12 text-center text-sm-left">
-                    <button type="button" class="btn btn-danger" v-for="item in taglist" v-bind:key="item.key" v-html="item.nama">
+                    <button type="button" class="btn btn-danger"
+                            v-for="item in taglist" v-bind:key="item.key" v-html="item.nama"
+                            @click="openGenre(item.id)">
                     </button>
                 </div>
             </div>
@@ -52,9 +56,13 @@
                 const response = await axios.get(url + '/tags/read.php')
                 this.taglist = response.data.data
             },
-            openDetail(data) {
+            openGenre(data) {
                 //this.$store.commit('setData', data)
-                this.$router.push({ 'name': 'player',query: { id: data.id } })
+                this.$router.push({ 'path': 'genre/' + data })
+            },
+            openCat(data) {
+                //this.$store.commit('setData', data)
+                this.$router.push({ 'path': 'category/' + data })
             }
         }
     }

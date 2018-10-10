@@ -6,6 +6,8 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import './registerServiceWorker'
 import VueMq from 'vue-mq'
+import 'vue-plyr'
+import 'vue-plyr/dist/vue-plyr.css'
 
 Vue.use(VueMq, {
     breakpoints: {

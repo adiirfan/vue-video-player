@@ -4,7 +4,7 @@
         <div class="container" id="content">
             <div class="row mt-3 mb-3">
                 <div class="col-md-12 text-center text-sm-left">
-                    <h4>TAG : {{tag.nama}}</h4>
+                    <h4>Genre : {{tag.nama}}</h4>
                 </div>
                 <div v-if="$mq === 'mobile'" class="col-md-12 text-sm-left">
                     <div class="card-columns card-columns-custom">

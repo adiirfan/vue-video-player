@@ -5,6 +5,7 @@ import category from './views/Category.vue'
 import Tag from './views/Tag.vue'
 import Home from './views/Home.vue'
 import Film from './views/Film.vue'
+import Search from './views/Search.vue'
 import categoryandtag from './views/categoryandtag.vue'
 
 Vue.use(Router)
@@ -37,7 +38,7 @@ export default new Router({
           component: category,
       },
       {
-          path: '/tag/:id',
+          path: '/genre/:id',
           name: 'tag',
           component: Tag,
       },
@@ -47,14 +48,19 @@ export default new Router({
           component: categoryandtag,
       },
       {
-          path: '/genre',
-          name: 'genre',
-          component: category,
+          path: '/genre/',
+          name: 'categoryandtag',
+          component: categoryandtag,
       },
       {
           path: '/film/:id',
           name: 'film',
           component: Film,
+      },
+      {
+          path: '/search',
+          name: 'search',
+          component: Search,
       },
   ]
 })

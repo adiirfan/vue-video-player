@@ -11,7 +11,9 @@
                                 <h5 class="text-white">{{item.nama}}</h5>
                             </div>
                             <div class="col-md-6">
-                                <p class="card-text text-white">Genres :<span v-for="items in item.tag" v-bind:key="items.key" class="badge badge-primary p-2 m-1"> {{items.nama}},</span></p>
+                                <p class="card-text text-white">Genres :<span v-for="items in item.tag" v-bind:key="items.key"
+                                                                              class="badge badge-primary p-2 m-1"
+                                                                              @click="openTag(items.id)"> {{items.nama}}</span></p>
                             </div>
                             <div class="col-md-6" v-if="$mq != 'mobile'">
                                 <br>
@@ -20,10 +22,16 @@
                             <br>
                             <div class="col-md-6">
                                 <a href="#" class="btn play-button">
-                                    <i class="material-icons">
-                                        play_arrow
+                                    <i class="fas fa-play m-1">
                                     </i>
                                 </a>
+                                <div class="btn play-button">
+                                    <i v-if="cekfavorites(item.id)" class="fas fa-heart m-1" @click="removeFavorite(item)">
+                                    </i>
+                                    <i v-else class="far fa-heart m-1" @click="addtoFavorite(item)">
+                                    </i>
+                                </div>
+
                             </div>
                             </div>
                         </div>
@@ -39,13 +47,17 @@
                 <div class="col-md-12">
                     <swiper :options="swiperOption">
                         <swiper-slide v-for="item in filmterbaru" v-bind:key="item.key">
-                            <div class="card"  style="height: 100%;max-height:400px;">
-                                <div class="crop">
-                                    <img class="card-img-top img- coverslider" :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ item.cover" alt="Card image cap">
+                            <div class="card" style="height: 100%;max-height:400px;">
+                                <div @click="openDetail(item)">
+                                <vue-plyr id="thumb" @click="openDetail(items.id)">
+                                    <video preload="metadata"  v-if="item.source" :src="item.source" width="100%">
+
+                                    </video>
+                                </vue-plyr>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{item.namavideo}}</h5>
-                                    <p class="card-text">Genres :<span v-for="items in item.tag" v-bind:key="items.key" class="badge badge-primary p-2 m-1"> {{items.nama}}</span></p>
+                                    <h5 class="card-title">{{item.nama}}</h5>
+                                    <p class="card-text">Genres :<span v-for="items in item.genre" v-bind:key="items.key" class="badge badge-primary p-2 m-1"> {{items.nama}}</span></p>
                                 </div>
                             </div>
                         </swiper-slide>
@@ -61,15 +73,19 @@
                 </div>
                 <div v-if="$mq === 'mobile'" class="col-md-12 text-sm-left">
                     <div class="card-columns card-columns-custom">
-                        <div class="card p-2" v-for="item in filmrekomen" v-bind:key="item.key" @click="openDetail(item)">
+                        <div class="card p-2" v-for="item in filmrekomen" v-bind:key="item.key">
                             <div class="fluid-container">
                                 <div class="row">
                                     <div class="col-4">
                                         <img class="card-img-top" :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ item.cover" alt="Card image cap">
                                     </div>
-                                    <div class="col-8 p-0">
+                                    <div class="col-8 pl-0">
                                         <h5 class="card-title">{{item.nama}}</h5>
-                                        <p class="card-text">Genres :<span v-for="items in item.tag" v-bind:key="items.key" class="badge badge-primary p-2 m-1"> {{items.nama}}</span></p>
+                                        <p class="card-text">Genres :<span v-for="items in item.tag" v-bind:key="items.key" @click="openTag(items.id)"
+                                                                           class="badge badge-primary p-2 m-1" > {{items.nama}}</span></p>
+                                        <br>
+                                        <i v-if="cekfavorites(item.id)" class="fas fa-heart fa-lg fa-red text-right" @click="removeFavorite(item)"></i>
+                                        <i v-else class="far fa-heart fa-lg text-right" @click="addtoFavorite(item)"></i>
                                     </div>
                                 </div>
                             </div>
@@ -78,11 +94,18 @@
                 </div>
                 <div v-else class="col-md-12">
                     <div class="card-columns card-columns-custom">
-                        <div class="card" v-for="item in filmrekomen" v-bind:key="item.key" @click="openDetail(item)">
-                            <img class="card-img-top" :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ item.cover" alt="Card image cap">
+                        <div class="card" v-for="item in filmrekomen" v-bind:key="item.key">
+                            <img class="card-img-top"
+                                 :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ item.cover"  @click="openFilm(item.id)" alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title">{{item.nama}}</h5>
-                                <p class="card-text">Genres :<span class="badge badge-primary p-2 m-1" v-for="items in item.tag" v-bind:key="items.key"> {{items.nama}}</span></p>
+                                <p class="card-text">Genres :<span class="badge badge-primary p-2 m-1"
+                                                                   v-for="items in item.tag" v-bind:key="items.key"
+                                                                   @click="openTag(items.id)">
+                                    {{items.nama}}</span></p>
+                                <br>
+                                <i v-if="cekfavorites(item.id)" class="fas fa-heart fa-lg fa-red" @click="removeFavorite(item)"></i>
+                                <i v-else class="far fa-heart fa-lg" @click="addtoFavorite(item)"></i>
                             </div>
                         </div>
                     </div>
@@ -134,11 +157,17 @@
                 filmterbaru : [],
                 filmrekomen:[],
                 loading: true,
+                favoriteid:[],
+                favorite: this.$store.state.favorite,
             }
         },
         mounted () {
             this.getvideoterbaru()
             this.getfilmrekomen()
+            this.favorite.map((item) => {
+                this.favoriteid.push(item.id)
+            })
+            console.log(this.favoriteid)
         },
         methods:{
             async getvideoterbaru(){
@@ -147,7 +176,15 @@
                         terbaru: 1,
                     },
                 })
-                this.filmterbaru = response.data.data
+                this.film = response.data.data
+                this.film.map((item, key) => {
+                    this.filmterbaru.push({
+                        id: item.id,
+                        genre: item.tag,
+                        nama: item.namavideo,
+                        source: 'http://192.168.2.82:81/api/assets/videos/' + item.file
+                    })
+                })
             },
             async getfilmrekomen(){
                 const response = await axios.get(url + '/film/read.php')
@@ -164,6 +201,34 @@
             openDetail(data) {
                 //this.$store.commit('setData', data)
                 this.$router.push({ 'name': 'player',query: { id: data.id } })
+            },
+            openTag(data) {
+                //this.$store.commit('setData', data)
+                this.$router.push({ 'path': 'genre/' + data })
+            },
+            openFilm(data) {
+                //this.$store.commit('setData', data)
+                this.$router.push({ 'path': 'film/' + data })
+            },
+            cekfavorites(data){
+                var n = this.favoriteid.includes(data);
+                return n
+            },
+            addtoFavorite(data){
+                this.$store.commit('addfavorite', data)
+                this.favoriteid.push(data.id)
+                //console.log()
+            },
+            removeFavorite(data){
+                const locationInFav = this.favorite.findIndex(p => {
+                    return p.id === data.id
+                })
+                if (locationInFav != -1) {
+                    this.favorite.splice(locationInFav, 1)
+                    this.favoriteid.splice(locationInFav, 1)
+                    this.$store.commit('removefavorite', locationInFav)
+                }
+
             }
         }
 

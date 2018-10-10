@@ -4,11 +4,13 @@
         <div class="container-fluid" id="content">
             <div class="row">
             <div class="col-md-8 py-4">
-                <video id="player" preload="none" playsinline controls width="100%">
-                    <source src="/assets/video/37210.mp4" type='video/mp4'>
+                <vue-plyr>
+                <video id="player" preload="metadata" playsinline controls width="100%">
+                    <source v-if="videosrc" :src="videosrc" type='video/mp4'>
                     <!-- Captions are optional -->
                     <!--track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default!-->
                 </video>
+                </vue-plyr>
                 <div class="row mt-2">
                     <div class="col-md-12 py-3">
                         <h2 class="border-bottom pb-3">{{video.namavideo}}</h2>
@@ -57,9 +59,7 @@
                 video:[],
                 genre:[],
                 category:[],
-                bgc: {
-                    backgroundImage: ''
-                }
+                videosrc: ''
             }
         },
         mounted () {
@@ -75,6 +75,7 @@
                 this.video = response.data
                 this.genre = response.data.tag
                 this.category = response.data.category
+                this.videosrc = 'http://192.168.2.82:81/api/assets/videos/' + this.video.file
             },
         }
     }

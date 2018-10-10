@@ -1,3 +1,19 @@
+@font-face {
+    font-family: 'Circular Std Book';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Circular Std Book'), url('./circular/CircularStd-Book.woff') format('woff');
+}
+
+body{
+    font-family: "Circular Std Book" !important;
+    background-color:#000000 !important;
+    color: #999 !important;
+}
+body h4{
+    color: #999 !important;
+}
+
 .image {
     position: relative;
     width: 100%; /* for IE 6 */
@@ -10,6 +26,15 @@
     -webkit-transform: translateY(-47%);
     transform: translateY(-47%);
     width: 100%;
+}
+.card{
+    background-color: #2a2a2e !important;
+}
+.list-group-item{
+    background-color: #2a2a2e !important;
+}
+.list-group-item-action{
+    color: #999 !important;
 }
 
 
@@ -57,4 +82,23 @@
 }
 .badge-primary{
     background: #ce2424 !important;
+}
+.plyr__control--overlaid {
+    background: #ce2424 !important;
+}
+.plyr--full-ui input[type=range]{
+    color:  #ce2424 !important;
+}
+#thumb .plyr__controls{
+    display: none !important;
+}
+.plyr--video .plyr__controls .plyr__control.plyr__tab-focus, .plyr--video .plyr__controls .plyr__control:hover, .plyr--video .plyr__controls .plyr__control[aria-expanded=true] {
+    background: #ce2424 !important;
+    color: #fff;
+}
+.fa-red{
+    color:  #ce2424 !important;
+}
+.text-right{
+    float:right;
 }
