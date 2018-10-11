@@ -77,10 +77,10 @@
                             <div class="fluid-container">
                                 <div class="row">
                                     <div class="col-4">
-                                        <img class="card-img-top" :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ item.cover" alt="Card image cap">
+                                        <img class="card-img-top" :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ item.cover" alt="Card image cap"  @click="openFilm(item.id)">
                                     </div>
                                     <div class="col-8 pl-0">
-                                        <h5 class="card-title">{{item.nama}}</h5>
+                                        <h5 class="card-title"  @click="openFilm(item.id)">{{item.nama}}</h5>
                                         <p class="card-text">Genres :<span v-for="items in item.tag" v-bind:key="items.key" @click="openTag(items.id)"
                                                                            class="badge badge-primary p-2 m-1" > {{items.nama}}</span></p>
                                         <br>
@@ -167,7 +167,6 @@
             this.favorite.map((item) => {
                 this.favoriteid.push(item.id)
             })
-            console.log(this.favoriteid)
         },
         methods:{
             async getvideoterbaru(){
@@ -228,7 +227,6 @@
                     this.favoriteid.splice(locationInFav, 1)
                     this.$store.commit('removefavorite', locationInFav)
                 }
-
             }
         }
 

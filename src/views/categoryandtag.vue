@@ -58,11 +58,11 @@
             },
             openGenre(data) {
                 //this.$store.commit('setData', data)
-                this.$router.push({ 'path': 'genre/' + data })
+                this.$router.push({ 'path': '/genre/' + data })
             },
             openCat(data) {
                 //this.$store.commit('setData', data)
-                this.$router.push({ 'path': 'category/' + data })
+                this.$router.push({ 'path': '/category/' + data })
             }
         }
     }

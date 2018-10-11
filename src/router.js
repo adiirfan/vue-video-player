@@ -6,6 +6,7 @@ import Tag from './views/Tag.vue'
 import Home from './views/Home.vue'
 import Film from './views/Film.vue'
 import Search from './views/Search.vue'
+import Favorite from './views/Favorite.vue'
 import categoryandtag from './views/categoryandtag.vue'
 
 Vue.use(Router)
@@ -61,6 +62,11 @@ export default new Router({
           path: '/search',
           name: 'search',
           component: Search,
+      },
+      {
+          path: '/favorite',
+          name: 'Favorite',
+          component: Favorite,
       },
   ]
 })

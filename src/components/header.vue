@@ -2,21 +2,49 @@
     <div class="navegat" id="navegat">
         <div class="nav-scroller">
             <nav class="nav nav-underline">
-                <a id="link" class="nav-link colors" href="#">
+                <router-link id="link" class="nav-link colors" :to="{ name: 'home'}">
                     Home
-                </a>
-                <a class="nav-link active colors" href="#">Category</a>
-                <a class="nav-link colors" href="#">Explore</a>
-                <a class="nav-link colors" href="#">Suggestions</a>
-                <a class="nav-link colors" href="#">Link</a>
+                </router-link>
+                <router-link class="nav-link colors" :to="'/category/'">Category</router-link>
+                <router-link class="nav-link colors" :to="'/genre/'" >Genre</router-link>
+                <router-link class="nav-link colors" :to="'/favorite/'">Favorite</router-link>
+                <router-link v-for="item in genre"
+                   class="nav-link colors" :to="/genre/ + item.id">{{item.nama}}</router-link>
+                <router-link v-for="item in category"
+                   class="nav-link colors" :to="/category/ + item.id">{{item.nama}}</router-link>
+                <span v-if="$mq == 'mobile'" class="nav-link colors" @click="toggle()" >Search</span>
+                <div v-if="$mq != 'mobile'" class="nav searchbox float-right mx-2 pt-2">
+                    <input type="text" class="form-control"  placeholder="Search"
+                           v-on:keyup.enter="searching" v-model="search"
+                    >
+                </div>
             </nav>
+        </div>
+        <div class="container">
+            <transition name="fade">
+            <div v-if="$mq == 'mobile' && isOpen" class="nav searchboxmobile  pt-2 pb-2">
+                <input type="text" class="form-control"  placeholder="Search" v-on:keyup.enter="searching" v-model="search">
+            </div>
+            </transition>
         </div>
     </div>
 </template>
 
 <script>
+    import axios from 'axios'
+    const url = "http://192.168.2.82:81/api/"
     export default {
+        data() {
+          return{
+              genre:[],
+              category:[],
+              isOpen:false,
+              search:''
+          }
+        },
         mounted(){
+            this.getcategory()
+            this.getgenre()
             if(this.$route.name == "home" || this.$route.name == "film"){
                 var myNav = document.getElementById("navegat");
                 var link = document.getElementsByClassName("colors");
@@ -45,6 +73,30 @@
                 myNav.classList.remove("navegat");
                 myNav.classList.add("navegatexcept");
             }
+        },
+        methods:{
+            async getgenre(){
+                const response = await axios.get(url + 'tags/read.php', {
+                    params: {
+                        top: 1
+                    },
+                })
+                this.genre = response.data.data
+            },
+            async getcategory(){
+                const response = await axios.get(url + 'category/read.php', {
+                    params: {
+                        top: 1
+                    },
+                })
+                this.category = response.data.data
+            },
+            toggle: function(){
+                this.isOpen = !this.isOpen
+            },
+            searching: function() {
+                this.$router.push({ 'path': '/search', query: { search : this.search } })
+            },
         }
     }
 </script>
@@ -65,12 +117,31 @@
         margin-top:60px;
     }
     .scroll {
-        background-color:#00000096 !important;
+        background-color:#000000 !important;
     }
     .colore{
-        color:white !important;
+        color:white ;
     }
     .navbar{
         z-index:2;
+    }
+    .router-link-exact-active {
+        color: #ce2424 !important;
+        cursor: pointer;
+    }
+    .searchbox{
+        width:30%;
+    }
+    .searchboxmobile{
+        width:100%;
+    }
+    .form-control{
+        height:30px !important;
+    }
+    fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
     }
 </style>

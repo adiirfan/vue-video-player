@@ -8,7 +8,9 @@
                         <h5 class="text-white">{{film.nama}}</h5>
                     </div>
                     <div class="col-md-6">
-                        <p class="card-text text-white">Genres :<span v-for="items in genre" v-bind:key="items.key" class="badge badge-primary p-2 m-1"> {{items.nama}},</span></p>
+                        <p class="card-text text-white">Genres :<span v-for="items in genre" v-bind:key="items.key"
+                                                                      @click="openTag(items.id)"
+                                                                      class="badge badge-primary p-2 m-1"> {{items.nama}},</span></p>
                     </div>
                     <div class="col-md-6" v-if="$mq != 'mobile'">
                         <br>
@@ -16,11 +18,12 @@
                     </div>
                     <br>
                     <div class="col-md-6">
-                        <a href="#" class="btn play-button">
-                            <i class="material-icons">
-                                play_arrow
+                        <div class="btn play-button">
+                            <i v-if="cekfavorites(film.id)" class="fas fa-heart m-1" @click="removeFavorite(film)">
                             </i>
-                        </a>
+                            <i v-else class="far fa-heart m-1" @click="addtoFavorite(film)">
+                            </i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,11 +82,16 @@
                 genre:[],
                 bgc: {
                     backgroundImage: ''
-                }
+                },
+                favoriteid:[],
+                favorite: this.$store.state.favorite,
             }
         },
         mounted () {
             this.getfilm()
+            this.favorite.map((item) => {
+                this.favoriteid.push(item.id)
+            })
         },
         methods:{
             async getfilm(){
@@ -107,6 +115,29 @@
             openDetail(data) {
                 //this.$store.commit('setData', data)
                 this.$router.push({ 'path': '/player',query: { id: data } })
+            },
+            openTag(data) {
+                //this.$store.commit('setData', data)
+                this.$router.push({ 'path': '/genre/' + data })
+            },
+            cekfavorites(data){
+                var n = this.favoriteid.includes(data);
+                return n
+            },
+            addtoFavorite(data){
+                this.$store.commit('addfavorite', data)
+                this.favoriteid.push(data.id)
+                //console.log()
+            },
+            removeFavorite(data){
+                const locationInFav = this.favorite.findIndex(p => {
+                    return p.id === data.id
+                })
+                if (locationInFav != -1) {
+                    this.favorite.splice(locationInFav, 1)
+                    this.favoriteid.splice(locationInFav, 1)
+                    this.$store.commit('removefavorite', locationInFav)
+                }
             }
         }
     }
