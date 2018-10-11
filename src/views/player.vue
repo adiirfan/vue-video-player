@@ -1,7 +1,7 @@
 <template>
     <div>
         <headers/>
-        <div class="container-fluid" id="content">
+        <div class="container" id="content">
             <div class="row">
             <div class="col-md-8 py-4">
                 <vue-plyr>
@@ -23,23 +23,32 @@
                             <div class="col-8 pr-0">
                                 <h5>{{video.nama}}</h5>
                                 <span>Kategori : <span v-for="categorys in category" class="badge badge-primary p-2 m-1"  v-bind:key="categorys.key">{{categorys.nama}}</span></span><br>
-                                <span>Genre : <span v-for="genres in genre" class="badge badge-primary p-2 m-1" v-bind:key="genres.key">{{genres.nama}}</span></span><br>
+                                <span>Genre : <span v-for="genres in genre" class="badge badge-primary p-2 m-1" @click="openTag(genres.id)" v-bind:key="genres.key">{{genres.nama}}</span></span><br>
                                 <!--span v-if="$mq != 'mobile'">Sinopsis : {{allfilm.synopsis}}</span><br!-->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--div class="col-md-4 my-4 shadow-sm">
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex">
-                            <img class="img-fluid thumbnail mx-2" :src="allfilm.image_url" alt="Card image cap">
-                            <h6>{{allfilm.title}}</h6>
-                        </div>
-                    </a>
+            <div class="col-md-4 my-4 shadow-sm">
+                <div class="col-md-12 text-center text-sm-left">
+                    <h4>Episode Lain</h4>
                 </div>
-            </div!-->
+                <div class="row d-flex justify-content-center">
+                    <div  class="card col-md-12 my-3 m-3 px-0" v-for="items in episodelain" v-bind:key="items.key">
+                        <!--img class="card-img-top" alt="Card image cap" !-->
+                        <div @click="openDetail(items.id)">
+                            <vue-plyr id="thumb">
+                                <video preload="metadata"  v-if="items.file" :src="'http://192.168.2.82:81/api/assets/videos/' + items.file" width="100%">
+                                </video>
+                            </vue-plyr>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{items.namavideo}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -59,7 +68,8 @@
                 video:[],
                 genre:[],
                 category:[],
-                videosrc: ''
+                videosrc: '',
+                episodelain:[],
             }
         },
         mounted () {
@@ -75,7 +85,26 @@
                 this.video = response.data
                 this.genre = response.data.tag
                 this.category = response.data.category
+                this.getanotherfilm(this.video.id_film)
                 this.videosrc = 'http://192.168.2.82:81/api/assets/videos/' + this.video.file
+            },
+            async getanotherfilm(data) {
+                const response = await axios.get(url + '/video/read.php', {
+                    params: {
+                        id: data,
+                        episode: this.id,
+                    },
+                })
+                console.log(response.data.data)
+                this.episodelain = response.data.data
+            },
+            openDetail(data) {
+                //this.$store.commit('setData', data)
+                this.$router.push({ 'path': '/player',query: { id: data } })
+            },
+            openTag(data) {
+                //this.$store.commit('setData', data)
+                this.$router.push({ 'path': 'genre/' + data })
             },
         }
     }

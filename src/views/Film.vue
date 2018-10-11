@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" v-if="$mq != 'mobile'">
+            <div class="row d-flex justify-content-center " v-if="$mq != 'mobile'">
                 <div  class="card col-md-3 my-3 m-3 px-0" v-for="items in video" v-bind:key="items.key">
                     <!--img class="card-img-top" alt="Card image cap" !-->
                     <div @click="openDetail(items.id)">
