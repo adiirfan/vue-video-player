@@ -30,14 +30,14 @@
                     </div>
                 </div>
             </div>
-            <div v-else class="col-md-12 my-3">
+            <div v-else class="col-md-12 my-3 row">
                 <div v-if="favorite.length < 1">
                     <p class="text-center">
                         Kamu tidak memiliki film favorit
                     </p>
                 </div>
-                <div v-else class="card-columns card-columns-custom">
-                    <div  class="card" v-for="item in favorite" v-bind:key="item.key" >
+                <div v-else class="col-md-3 mb-4" v-for="item in favorite" v-bind:key="item.key">
+                    <div class="card h-100">
                         <div >
                             <img class="card-img-top" @click="openDetail(item)"
                                  :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ item.cover"   alt="Card image cap">
@@ -55,6 +55,13 @@
                 </div>
             </div>
         </div>
+        <footer>
+            <div class="row text-center">
+                <div class="col-lg-12">
+                    <p>© Copyright 2018 by Lytogame. All Right Reserved</p>
+                </div>
+            </div>
+        </footer>
     </div>
     
 </template>

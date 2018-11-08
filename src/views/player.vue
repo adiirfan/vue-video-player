@@ -3,34 +3,34 @@
         <headers/>
         <div class="container" id="content">
             <div class="row">
-            <div class="col-md-8 py-4">
-                <vue-plyr>
-                <video id="player" preload="metadata" playsinline controls width="100%">
-                    <source v-if="videosrc" :src="videosrc" type='video/mp4'>
-                    <!-- Captions are optional -->
-                    <!--track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default!-->
-                </video>
-                </vue-plyr>
-                <div class="row mt-2">
-                    <div class="col-md-12 py-3">
-                        <h2 class="border-bottom pb-3">{{video.namavideo}}</h2>
-                    </div>
-                    <div class="col-md-12 pt-3 pr-0">
-                        <div class="row px-3">
-                            <div class="col-3 px-0">
-                                <img class="card-img-top cover" :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ video.cover" alt="Card image cap">
-                            </div>
-                            <div class="col-8 pr-0">
-                                <h5>{{video.nama}}</h5>
-                                <span>Kategori : <span v-for="categorys in category" class="badge badge-primary p-2 m-1"  v-bind:key="categorys.key">{{categorys.nama}}</span></span><br>
-                                <span>Genre : <span v-for="genres in genre" class="badge badge-primary p-2 m-1" @click="openTag(genres.id)" v-bind:key="genres.key">{{genres.nama}}</span></span><br>
-                                <!--span v-if="$mq != 'mobile'">Sinopsis : {{allfilm.synopsis}}</span><br!-->
+                <div class="col-md-9 py-4">
+                    <vue-plyr>
+                    <video id="player" preload="metadata" playsinline controls width="100%">
+                        <source v-if="videosrc" :src="videosrc" type='video/mp4'>
+                        <!-- Captions are optional -->
+                        <!--track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default!-->
+                    </video>
+                    </vue-plyr>
+                    <div class="row mt-2">
+                        <div class="col-md-12 py-3">
+                            <h2 class="border-bottom pb-3">{{video.namavideo}}</h2>
+                        </div>
+                        <div class="col-md-12 pt-3 pr-0">
+                            <div class="row px-3">
+                                <div class="col-3 px-0">
+                                    <img class="card-img-top cover" :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ video.cover" alt="Card image cap">
+                                </div>
+                                <div class="col-8 pr-0">
+                                    <h5>{{video.nama}}</h5>
+                                    <span>Kategori : <span v-for="categorys in category" class="badge badge-primary p-2 m-1"  v-bind:key="categorys.key">{{categorys.nama}}</span></span><br>
+                                    <span>Genre : <span v-for="genres in genre" class="badge badge-primary p-2 m-1" @click="openTag(genres.id)" v-bind:key="genres.key">{{genres.nama}}</span></span><br>
+                                    <!--span v-if="$mq != 'mobile'">Sinopsis : {{allfilm.synopsis}}</span><br!-->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 my-4 shadow-sm">
+                <div class="col-md-3 my-4 shadow-sm">
                 <div class="col-md-12 text-center text-sm-left">
                     <h4>Episode Lain</h4>
                 </div>
@@ -51,6 +51,13 @@
             </div>
             </div>
         </div>
+        <footer>
+            <div class="row text-center">
+                <div class="col-lg-12">
+                    <p>© Copyright 2018 by Lytogame. All Right Reserved</p>
+                </div>
+            </div>
+        </footer>
     </div>
 </template>
 
@@ -95,15 +102,12 @@
                         episode: this.id,
                     },
                 })
-                console.log(response.data.data)
                 this.episodelain = response.data.data
             },
             openDetail(data) {
-                //this.$store.commit('setData', data)
                 this.$router.push({ 'path': '/player',query: { id: data } })
             },
             openTag(data) {
-                //this.$store.commit('setData', data)
                 this.$router.push({ 'path': 'genre/' + data })
             },
         }

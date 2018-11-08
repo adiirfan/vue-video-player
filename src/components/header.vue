@@ -1,7 +1,12 @@
 <template>
     <div class="navegat" id="navegat">
+
         <div class="nav-scroller">
             <nav class="nav nav-underline">
+                <a class="navbar-brand mr-0 ml-2 mr-md-2">
+                    <img src="@/assets/lytogame_mini.png" v-if="$mq == 'mobile'"/>
+                    <img v-else src="@/assets/lytogame.png" style="width:70%"/>
+                </a>
                 <router-link id="link" class="nav-link colors" :to="{ name: 'home'}">
                     Home
                 </router-link>

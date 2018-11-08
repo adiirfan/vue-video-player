@@ -25,9 +25,9 @@
                         </div>
                     </div>
                 </div>
-                <div v-else class="col-md-12 text-center text-sm-left">
-                    <div class="card-columns card-columns-custom">
-                        <div class="card" v-for="item in tag.film" v-bind:key="item.key" >
+                <div v-else class="col-md-12 text-center text-sm-left row">
+                    <div class="col-md-3 mb-4" v-for="item in tag.film" v-bind:key="item.key" >
+                        <div class="card h-100">
                             <img @click="openDetail(item)" class="card-img-top" :src="'https://myanimelist.cdn-dena.com/images/anime/1173/'+ item.cover" alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title">{{item.nama}}</h5>
@@ -42,6 +42,13 @@
                 </div>
             </div>
         </div>
+        <footer>
+            <div class="row text-center">
+                <div class="col-lg-12">
+                    <p>© Copyright 2018 by Lytogame. All Right Reserved</p>
+                </div>
+            </div>
+        </footer>
     </div>
 </template>
 

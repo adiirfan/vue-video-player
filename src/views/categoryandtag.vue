@@ -25,6 +25,13 @@
                 </div>
             </div>
         </div>
+        <footer>
+            <div class="row text-center">
+                <div class="col-lg-12">
+                    <p>© Copyright 2018 by Lytogame. All Right Reserved</p>
+                </div>
+            </div>
+        </footer>
     </div>
 </template>
 

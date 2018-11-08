@@ -59,6 +59,13 @@
                         v-for="items in video" v-bind:key="items.key" @click="openDetail(items.id)">{{items.nama}}</button>
             </ul>
         </div>
+        <footer>
+            <div class="row text-center">
+                <div class="col-lg-12">
+                    <p>© Copyright 2018 by Lytogame. All Right Reserved</p>
+                </div>
+            </div>
+        </footer>
     </div>
 </template>
 
